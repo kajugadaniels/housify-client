@@ -1,120 +1,147 @@
+@import url("https://db.onlinewebfonts.com/c/09910d5412f7b15d79772a1609c76e09?family=AG+Royal+Medium");
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
-@theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-}
-
-:root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-}
-
+/* =========================
+   Design Tokens (CSS Vars)
+   ========================= */
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+    :root {
+        /* ---------- Primary (Neutral Blue) ---------- */
+        --primary-0: 255 255 255;
+        --primary-100: 220 228 255;
+        --primary-200: 186 200 255;
+        --primary-300: 150 171 255;
+        --primary-400: 159 132 253;
+        --primary-500: 84 110 255;
+        /* Default */
+        --primary-600: 61 83 219;
+        --primary-700: 42 56 183;
+        --primary-800: 26 39 147;
+        --primary-900: 16 25 122;
+
+        /* ---------- Success (Green) ---------- */
+        --success-100: 245 252 210;
+        --success-200: 232 250 166;
+        --success-300: 211 241 120;
+        --success-400: 188 228 85;
+        --success-500: 156 211 35;
+        /* Default */
+        --success-600: 127 181 25;
+        --success-700: 101 151 17;
+        --success-800: 76 122 11;
+        --success-900: 59 101 6;
+
+        /* ---------- Error (Red) ---------- */
+        --error-100: 255 231 211;
+        --error-200: 255 200 166;
+        --error-300: 255 163 122;
+        --error-400: 255 127 89;
+        --error-500: 255 68 35;
+        /* Default */
+        --error-600: 219 39 25;
+        --error-700: 183 17 18;
+        --error-800: 147 11 22;
+        --error-900: 122 6 25;
+
+        /* ---------- Warning (Amber) ---------- */
+        --warning-100: 255 248 215;
+        --warning-200: 255 240 176;
+        --warning-300: 255 228 136;
+        --warning-400: 255 217 107;
+        --warning-500: 255 199 58;
+        /* Default */
+        --warning-600: 219 163 42;
+        --warning-700: 183 130 29;
+        --warning-800: 147 99 18;
+        --warning-900: 122 77 11;
+
+        /* ---------- Information (Blue) ---------- */
+        --info-100: 220 243 255;
+        --info-200: 186 229 255;
+        --info-300: 152 211 255;
+        --info-400: 126 194 255;
+        --info-500: 84 166 255;
+        /* Default */
+        --info-600: 59 129 219;
+        --info-700: 42 96 183;
+        --info-800: 26 67 147;
+        --info-900: 16 46 122;
+
+        /* ---------- Secondary (Near-black / Slate) ---------- */
+        --secondary-100: 223 225 243;
+        --secondary-200: 194 198 232;
+        --secondary-300: 142 146 188;
+        --secondary-400: 84 87 122;
+        --secondary-500: 20 21 34;
+        /* Default */
+        --secondary-600: 14 15 29;
+        --secondary-700: 10 10 24;
+        --secondary-800: 6 7 19;
+        --secondary-900: 4 8 21;
+
+        /* Semantic aliases (optional, tweak freely) */
+        --bg-base: 7 26 42;
+        /* #071A2A from your app shell */
+        --text-base: 255 255 255;
+        --text-dark: 0 0 0;
+    }
+
+    body {
+        font-family: "AG Royal Medium", sans-serif;
+        background: white;
+        color: rgb(var(--primary-900));
+    }
+
+    /* Minimal, classy button presets (use with Tailwind too) */
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 font-medium transition-all;
+    }
+
+    .btn-primary {
+        background: rgb(var(--primary-500));
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background: rgb(var(--primary-600));
+    }
+
+    .btn-success {
+        background: rgb(var(--success-500));
+        color: black;
+    }
+
+    .btn-success:hover {
+        background: rgb(var(--success-600));
+    }
+
+    .btn-warning {
+        background: rgb(var(--warning-500));
+        color: black;
+    }
+
+    .btn-warning:hover {
+        background: rgb(var(--warning-600));
+    }
+
+    .btn-danger {
+        background: rgb(var(--error-500));
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background: rgb(var(--error-600));
+    }
+
+    .btn-outline {
+        @apply border;
+        border-color: rgb(var(--secondary-400));
+        color: rgb(var(--secondary-100));
+    }
+
+    .btn-outline:hover {
+        border-color: rgb(var(--primary-500));
+        color: rgb(var(--primary-500));
+    }
 }
