@@ -1,82 +1,50 @@
 import Link from "next/link";
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Avatar } from "@/components/ui/avatar";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { toast } from "sonner";
-import useAuthStore from "@/lib/store/useAuthStore";
+import React, { useState, useEffect } from "react";
+import Logo from "@/components/shared/Logo";
+import AuthButtons from "./AuthButtons";
+import { Skeleton } from "@/components/ui/skeleton";
 
 /**
- * AuthButtons
- * Handles authenticated and unauthenticated states:
- * - If not authenticated: show Sign In & Sign Up CTA
- * - If authenticated: show user avatar with menu (profile, sign out)
- *
- * Reusable and small so it can be used anywhere.
+ * AuthHeader
+ * - Left: Logo (link to home)
+ * - Right: Sign in / Sign up buttons
+ * - Includes skeleton loader simulation (mimics loading states)
  */
-const AuthButtons: React.FC = () => {
-    const { isAuthenticated, user, signOut } = useAuthStore();
+const AuthHeader: React.FC = () => {
+    const [loading, setLoading] = useState(true);
 
-    const handleSignOut = () => {
-        signOut();
-        toast.success("Signed out successfully");
-    };
-
-    if (!isAuthenticated) {
-        return (
-            <div className="flex items-center gap-2">
-                <Link href="/auth/signin">
-                    <a>
-                        <Button variant="ghost" className="px-4 py-2">
-                            Sign in
-                        </Button>
-                    </a>
-                </Link>
-
-                <Link href="/auth/signup">
-                    <a>
-                        <Button className="px-4 py-2">Sign up</Button>
-                    </a>
-                </Link>
-            </div>
-        );
-    }
+    // Simulate small loading delay (you can remove this later)
+    useEffect(() => {
+        const timer = setTimeout(() => setLoading(false), 800);
+        return () => clearTimeout(timer);
+    }, []);
 
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <button
-                    aria-label="Open user menu"
-                    className="flex items-center gap-2 focus:outline-none"
-                >
-                    <Avatar>
-                        <img src={user?.avatar || "/avatar-placeholder.png"} alt={user?.name ?? "User avatar"} />
-                    </Avatar>
-                </button>
-            </DropdownMenuTrigger>
+        <div className="bg-white/60 backdrop-blur border-b border-slate-200">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
+                <div className="flex items-center justify-between h-16">
+                    <div className="flex items-center gap-4">
+                        <Link href="/" aria-label="Housify home">
+                            <div className="flex items-center gap-3 cursor-pointer">
+                                <Logo className="h-9 w-auto" />
+                            </div>
+                        </Link>
+                    </div>
 
-            <DropdownMenuContent align="end">
-                <DropdownMenuItem asChild>
-                    <Link href="/profile">
-                        <a>Profile</a>
-                    </Link>
-                </DropdownMenuItem>
-
-                <DropdownMenuItem asChild>
-                    <Link href="/dashboard">
-                        <a>Dashboard</a>
-                    </Link>
-                </DropdownMenuItem>
-
-                <DropdownMenuItem onSelect={handleSignOut}>Sign out</DropdownMenuItem>
-            </DropdownMenuContent>
-        </DropdownMenu>
+                    <div className="flex items-center gap-3">
+                        {loading ? (
+                            <div className="flex items-center gap-2">
+                                <Skeleton className="h-9 w-24 rounded" />
+                                <Skeleton className="h-9 w-24 rounded" />
+                            </div>
+                        ) : (
+                            <AuthButtons />
+                        )}
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 };
 
-export default AuthButtons;
+export default AuthHeader;
