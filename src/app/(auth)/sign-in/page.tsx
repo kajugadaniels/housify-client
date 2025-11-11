@@ -89,7 +89,7 @@ export default function SignIn() {
                 <div
                     className="
                     mx-auto w-full max-w-xl rounded-2xl overflow-hidden
-                    border border-white/60 bg-white/50 backdrop-blur-2xl
+                    bg-white backdrop-blur-2xl
                     shadow-[0_8px_25px_rgba(0,0,0,0.08)]
                     ring-1 ring-white/40
                     transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,0,0,0.1)]
@@ -109,7 +109,7 @@ export default function SignIn() {
                                     onChange={(e) =>
                                         setFormData({ ...formData, username: e.target.value })
                                     }
-                                    className="pl-10 bg-white/80 border-neutral-300 text-neutral-800"
+                                    className="pl-10 bg-white/80 border-neutral-300 text-neutral-800 "
                                 />
                                 <User
                                     className="absolute left-3 top-3 text-neutral-400"
