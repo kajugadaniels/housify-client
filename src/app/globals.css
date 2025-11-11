@@ -208,3 +208,59 @@ body {
 .animate-sound-wave {
   animation: sound-wave 1.2s ease-in-out infinite;
 }
+
+/* === 3D & Animation Enhancements === */
+
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.3s ease-out forwards;
+}
+
+/* 3D hover lighting effect */
+.navbar-3d {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.4),
+    rgba(255, 255, 255, 0.1)
+  );
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.05),
+    inset 0 1px rgba(255, 255, 255, 0.4);
+  transition: all 0.4s ease-in-out;
+}
+
+.navbar-3d::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.15), transparent 70%);
+  transition: transform 0.6s ease;
+  transform: translateX(-100%) rotate(30deg);
+  pointer-events: none;
+}
+
+.navbar-3d:hover::before {
+  transform: translateX(100%) rotate(30deg);
+}
+
+.navbar-3d:hover {
+  box-shadow:
+    0 10px 40px rgba(83, 118, 246, 0.25),
+    inset 0 1px 3px rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px) scale(1.01);
+}

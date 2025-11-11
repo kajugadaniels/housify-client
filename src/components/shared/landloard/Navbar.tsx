@@ -32,7 +32,6 @@ const LandlordNavbar = () => {
         }
     }, [pathname]);
 
-    // Close dropdown on outside click
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
             if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
@@ -43,7 +42,6 @@ const LandlordNavbar = () => {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    // Handle logout
     const handleLogout = () => {
         localStorage.removeItem("housify_landlord");
         router.push("/sign-in");
@@ -51,27 +49,31 @@ const LandlordNavbar = () => {
 
     return (
         <div
-            className="
-        fixed bottom-6 left-1/2 -translate-x-1/2
-        w-[90%] sm:w-auto lg:max-w-[60%] xl:max-w-[50%] 2xl:max-w-[45%]
-        bg-white/60 backdrop-blur-xl
-        border border-white/40
-        shadow-[0_4px_30px_rgba(0,0,0,0.05)]
-        rounded-full
-        z-50 flex items-center justify-between
-        px-3 sm:px-5 py-2 sm:py-3
-        transition-all duration-300
-      "
+            className={cn(
+                "fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center justify-between",
+                "w-[90%] sm:w-auto lg:max-w-[60%] xl:max-w-[50%] 2xl:max-w-[45%]",
+                "bg-white/60 dark:bg-neutral-900/60 backdrop-blur-xl border border-white/40 dark:border-white/10",
+                "shadow-[0_4px_30px_rgba(0,0,0,0.08)] rounded-full px-3 sm:px-5 py-2 sm:py-3 transition-all duration-300",
+                "lg:hover:scale-[1.01] lg:hover:shadow-[0_10px_40px_rgba(83,118,246,0.15)] lg:transition-transform lg:duration-500 lg:ease-out",
+                "lg:[transform-style:preserve-3d] lg:[perspective:1000px] lg:hover:[transform:rotateX(1deg)_rotateY(-1deg)]"
+            )}
             style={{
-                maxWidth: "900px", // hard max cap
+                maxWidth: "900px",
             }}
         >
-            {/* Logo only (no text) */}
-            <div className="hidden sm:flex items-center gap-2 pl-2 shrink-0 mr-4">
-                <Image src="/logo.png" alt="Housify Logo" width={28} height={28} loading="lazy" />
+            {/* Logo */}
+            <div className="hidden sm:flex items-center gap-2 pl-2 shrink-0 mr-4 group">
+                <Image
+                    src="/logo.png"
+                    alt="Housify Logo"
+                    width={28}
+                    height={28}
+                    loading="lazy"
+                    className="transition-transform duration-500 group-hover:rotate-[10deg] group-hover:scale-110"
+                />
             </div>
 
-            {/* Scrollable Navigation Links */}
+            {/* Nav Links */}
             <div
                 className="
           hidden sm:flex items-center justify-start gap-3 flex-1 overflow-x-auto
@@ -89,8 +91,9 @@ const LandlordNavbar = () => {
                             onClick={() => router.push(item.href)}
                             className={cn(
                                 "group flex items-center gap-2 px-3 py-2 rounded-full transition-all text-xs whitespace-nowrap",
+                                "hover:translate-y-[-1px] hover:shadow-[0_2px_10px_rgba(83,118,246,0.15)]",
                                 isActive
-                                    ? "bg-primary text-white"
+                                    ? "bg-primary text-white shadow-[inset_0_2px_4px_rgba(255,255,255,0.3)]"
                                     : "text-neutral-600 hover:text-primary hover:bg-primary/10"
                             )}
                         >
@@ -102,7 +105,7 @@ const LandlordNavbar = () => {
                             <span
                                 className={cn(
                                     "hidden md:inline font-medium",
-                                    isActive ? "text-white" : "text-neutral-700"
+                                    isActive ? "text-white" : "text-neutral-700 dark:text-neutral-300"
                                 )}
                             >
                                 {item.name}
@@ -112,24 +115,23 @@ const LandlordNavbar = () => {
                 })}
             </div>
 
-            {/* Mobile Menu (Sheet Trigger) */}
+            {/* Mobile Sheet */}
             <div className="flex sm:hidden">
                 <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
                     <SheetTrigger asChild>
-                        <button className="p-2 rounded-full hover:bg-neutral-100 transition">
-                            <Menu size={22} className="text-neutral-700" />
+                        <button className="p-2 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-800 transition">
+                            <Menu size={22} className="text-neutral-700 dark:text-neutral-200" />
                         </button>
                     </SheetTrigger>
                     <SheetContent
                         side="bottom"
                         className="
-              bg-white/70 backdrop-blur-2xl
+              bg-white/70 dark:bg-neutral-900/70 backdrop-blur-2xl
               shadow-[0_-8px_30px_rgba(0,0,0,0.1)] rounded-t-2xl
-              border-t border-white/40
+              border-t border-white/40 dark:border-white/10
               transition-all duration-300
             "
                     >
-                        {/* Accessible Header */}
                         <SheetHeader>
                             <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle>
                         </SheetHeader>
@@ -139,7 +141,7 @@ const LandlordNavbar = () => {
                                 <Image src="/logo.png" alt="Logo" width={28} height={28} />
                             </div>
                             <SheetClose asChild>
-                                <button className="p-2 rounded-md hover:bg-neutral-100 transition">
+                                <button className="p-2 rounded-md hover:bg-neutral-100 dark:hover:bg-neutral-800 transition">
                                     <X size={20} />
                                 </button>
                             </SheetClose>
@@ -155,7 +157,7 @@ const LandlordNavbar = () => {
                                             router.push(item.href);
                                             setIsSheetOpen(false);
                                         }}
-                                        className="flex flex-col items-center justify-center gap-1 text-sm text-neutral-700 hover:text-primary transition"
+                                        className="flex flex-col items-center justify-center gap-1 text-sm text-neutral-700 dark:text-neutral-200 hover:text-primary transition"
                                     >
                                         <Icon size={22} />
                                         {item.name}
@@ -171,20 +173,20 @@ const LandlordNavbar = () => {
             <div className="relative shrink-0" ref={dropdownRef}>
                 <button
                     onClick={() => setIsDropdownOpen((p) => !p)}
-                    className="flex flex-col sm:flex-row items-center sm:gap-2 px-3 py-2 rounded-full transition-all hover:bg-primary/10 ml-3"
+                    className="flex flex-col sm:flex-row items-center sm:gap-2 px-3 py-2 rounded-full transition-all hover:bg-primary/10 dark:hover:bg-primary/20 ml-3"
                 >
                     {landlord?.avatar ? (
                         <Image
                             src={landlord.avatar}
-                            width={14}
-                            height={14}
+                            width={28}
+                            height={28}
                             alt="Avatar"
-                            className="rounded-full"
+                            className="rounded-full border border-white/40 shadow-[0_0_10px_rgba(83,118,246,0.3)]"
                         />
                     ) : (
-                        <UserCircle className="text-primary" size={14} />
+                        <UserCircle className="text-primary" size={22} />
                     )}
-                    <span className="hidden sm:inline text-xs font-medium text-neutral-700">
+                    <span className="hidden sm:inline text-xs font-medium text-neutral-700 dark:text-neutral-200">
                         {landlord?.name?.split(" ")[0] || "Profile"}
                     </span>
                 </button>
@@ -192,10 +194,10 @@ const LandlordNavbar = () => {
                 {isDropdownOpen && (
                     <div
                         className="
-              absolute bottom-14 right-0 w-48
-              bg-white backdrop-blur-xl border border-white/30
-              shadow-[0_8px_25px_rgba(0,0,0,0.08)]
-              rounded-xl py-2 z-50
+              absolute bottom-14 right-0 w-48 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-xl
+              border border-white/30 dark:border-white/10
+              shadow-[0_8px_25px_rgba(0,0,0,0.08)] rounded-xl py-2 z-50
+              animate-fade-in-up
             "
                     >
                         {LANDLORD_PROFILE_DROPDOWN.map((item) => {
@@ -209,8 +211,8 @@ const LandlordNavbar = () => {
                                     className={cn(
                                         "flex items-center gap-2 w-full px-4 py-2 text-sm transition",
                                         item.isLogout
-                                            ? "text-red-600 hover:bg-red-50 rounded-sm"
-                                            : "text-neutral-700 hover:bg-primary/10 rounded-sm"
+                                            ? "text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30 rounded-sm"
+                                            : "text-neutral-700 dark:text-neutral-200 hover:bg-primary/10 rounded-sm"
                                     )}
                                 >
                                     <Icon size={16} />
