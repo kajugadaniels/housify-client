@@ -2,9 +2,10 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { LANDLORD_NAV_LINKS } from "@/constants/landlord";
+import { LANDLORD_NAV_LINKS, LANDLORD_PROFILE_DROPDOWN } from "@/constants/landlord";
 import { cn } from "@/lib/utils";
-import { Settings, LogOut, UserCircle } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Menu, X, UserCircle } from "lucide-react";
 import Image from "next/image";
 
 const LandlordNavbar = () => {
@@ -13,6 +14,7 @@ const LandlordNavbar = () => {
     const [active, setActive] = useState<string>("");
     const [landlord, setLandlord] = useState<{ name?: string; email?: string; avatar?: string }>({});
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [isSheetOpen, setIsSheetOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
@@ -23,18 +25,18 @@ const LandlordNavbar = () => {
         }
     }, [pathname]);
 
-    // Close dropdown when clicking outside
+    // Close dropdown on outside click
     useEffect(() => {
-        function handleClickOutside(e: MouseEvent) {
+        const handleClickOutside = (e: MouseEvent) => {
             if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
                 setIsDropdownOpen(false);
             }
-        }
+        };
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
 
-    // Logout
+    // Handle logout
     const handleLogout = () => {
         localStorage.removeItem("housify_landlord");
         router.push("/sign-in");
@@ -54,41 +56,83 @@ const LandlordNavbar = () => {
         transition-all duration-300
       "
         >
-            {/* Navigation Links */}
-            {LANDLORD_NAV_LINKS.map((item) => {
-                const Icon = item.icon;
-                const isActive = active === item.href;
+            {/* Logo */}
+            <div className="hidden sm:flex items-center gap-2 pl-2">
+                <Image src="/logo.png" alt="Housify Logo" width={28} height={28} />
+                <span className="text-sm font-semibold text-neutral-800">Housify</span>
+            </div>
 
-                return (
-                    <button
-                        key={item.name}
-                        onClick={() => router.push(item.href)}
-                        className={cn(
-                            "group flex flex-col sm:flex-row items-center sm:gap-2 px-3 py-2 rounded-full transition-all",
-                            isActive
-                                ? "bg-primary text-white"
-                                : "text-neutral-600 hover:text-primary hover:bg-primary/10"
-                        )}
-                    >
-                        <Icon
-                            size={20}
-                            strokeWidth={1.8}
+            {/* Navigation Links */}
+            <div className="hidden sm:flex items-center justify-center gap-3 flex-1">
+                {LANDLORD_NAV_LINKS.map((item) => {
+                    const Icon = item.icon;
+                    const isActive = active === item.href;
+
+                    return (
+                        <button
+                            key={item.name}
+                            onClick={() => router.push(item.href)}
                             className={cn(
-                                "transition-all duration-300",
-                                isActive ? "text-white" : "text-neutral-600 group-hover:text-primary"
-                            )}
-                        />
-                        <span
-                            className={cn(
-                                "hidden sm:inline text-sm font-medium transition-all",
-                                isActive ? "text-white" : "text-neutral-700"
+                                "group flex items-center gap-2 px-3 py-2 rounded-full transition-all text-sm",
+                                isActive
+                                    ? "bg-primary text-white"
+                                    : "text-neutral-600 hover:text-primary hover:bg-primary/10"
                             )}
                         >
-                            {item.name}
-                        </span>
-                    </button>
-                );
-            })}
+                            <Icon
+                                size={20}
+                                strokeWidth={1.8}
+                                className={isActive ? "text-white" : "text-neutral-600 group-hover:text-primary"}
+                            />
+                            <span
+                                className={cn(
+                                    "hidden md:inline font-medium",
+                                    isActive ? "text-white" : "text-neutral-700"
+                                )}
+                            >
+                                {item.name}
+                            </span>
+                        </button>
+                    );
+                })}
+            </div>
+
+            {/* Mobile Menu (Sheet Trigger) */}
+            <div className="flex sm:hidden">
+                <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+                    <SheetTrigger asChild>
+                        <button className="p-2 rounded-full hover:bg-neutral-100 transition">
+                            <Menu size={22} className="text-neutral-700" />
+                        </button>
+                    </SheetTrigger>
+                    <SheetContent side="bottom" className="bg-white/60 backdrop-blur-xl border-t border-white/40">
+                        <div className="flex justify-between items-center mb-4">
+                            <h2 className="text-lg font-semibold text-neutral-800">Navigation</h2>
+                            <button onClick={() => setIsSheetOpen(false)} className="p-2 rounded-md hover:bg-neutral-100">
+                                <X size={20} />
+                            </button>
+                        </div>
+                        <div className="grid grid-cols-3 gap-4 pb-6">
+                            {LANDLORD_NAV_LINKS.map((item) => {
+                                const Icon = item.icon;
+                                return (
+                                    <button
+                                        key={item.name}
+                                        onClick={() => {
+                                            router.push(item.href);
+                                            setIsSheetOpen(false);
+                                        }}
+                                        className="flex flex-col items-center justify-center gap-1 text-sm text-neutral-700 hover:text-primary transition"
+                                    >
+                                        <Icon size={22} />
+                                        {item.name}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </SheetContent>
+                </Sheet>
+            </div>
 
             {/* Profile Dropdown */}
             <div className="relative" ref={dropdownRef}>
@@ -118,27 +162,29 @@ const LandlordNavbar = () => {
               absolute bottom-14 right-0 w-48
               bg-white/60 backdrop-blur-xl border border-white/30
               shadow-[0_8px_25px_rgba(0,0,0,0.08)]
-              rounded-xl py-2 z-50 animate-in slide-in-from-bottom-2
+              rounded-xl py-2 z-50
             "
                     >
-                        <button
-                            onClick={() => router.push("/landlord/profile/edit")}
-                            className="flex items-center gap-2 w-full px-4 py-2 text-sm text-neutral-700 hover:bg-primary/10 transition"
-                        >
-                            <UserCircle size={16} /> Edit Profile
-                        </button>
-                        <button
-                            onClick={() => router.push("/landlord/settings")}
-                            className="flex items-center gap-2 w-full px-4 py-2 text-sm text-neutral-700 hover:bg-primary/10 transition"
-                        >
-                            <Settings size={16} /> Settings
-                        </button>
-                        <button
-                            onClick={handleLogout}
-                            className="flex items-center gap-2 w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition"
-                        >
-                            <LogOut size={16} /> Logout
-                        </button>
+                        {LANDLORD_PROFILE_DROPDOWN.map((item) => {
+                            const Icon = item.icon;
+                            return (
+                                <button
+                                    key={item.name}
+                                    onClick={() =>
+                                        item.isLogout ? handleLogout() : router.push(item.href)
+                                    }
+                                    className={cn(
+                                        "flex items-center gap-2 w-full px-4 py-2 text-sm transition",
+                                        item.isLogout
+                                            ? "text-red-600 hover:bg-red-50"
+                                            : "text-neutral-700 hover:bg-primary/10"
+                                    )}
+                                >
+                                    <Icon size={16} />
+                                    {item.name}
+                                </button>
+                            );
+                        })}
                     </div>
                 )}
             </div>
