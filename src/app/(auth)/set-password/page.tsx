@@ -237,7 +237,7 @@ export default function SetPassword() {
                                 </span>
                             ) : (
                                 <>
-                                    <KeyRound size={18} className="mr-2" />
+                                    <KeyRound size={16} className="mr-2" />
                                     Set Password
                                 </>
                             )}

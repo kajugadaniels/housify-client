@@ -170,7 +170,7 @@ export default function Verify() {
                                 </span>
                             ) : (
                                 <>
-                                    <ShieldCheck size={18} className="mr-2" />
+                                    <ShieldCheck size={16} className="mr-2" />
                                     Verify Account
                                 </>
                             )}

@@ -8,12 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
-import {
-    Eye,
-    EyeOff,
-    Lock,
-    User,
-} from "lucide-react"; // ✅ Lucide icons
+import { Eye, EyeOff, Lock, LockKeyholeOpen, User } from "lucide-react";
 
 export default function SignIn() {
     const [loading, setLoading] = React.useState(true);
@@ -23,11 +18,20 @@ export default function SignIn() {
         password: "",
         remember: true,
     });
+    const [isSubmitting, setIsSubmitting] = React.useState(false);
 
     React.useEffect(() => {
         const timer = setTimeout(() => setLoading(false), 1500);
         return () => clearTimeout(timer);
     }, []);
+
+    const handleLogin = async () => {
+        setIsSubmitting(true);
+        // simulate API delay
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        console.log("Logging in with:", formData);
+        setIsSubmitting(false);
+    };
 
     // ------------------------------------------------------------
     // Skeleton loader (exact layout matching the final form)
@@ -67,13 +71,7 @@ export default function SignIn() {
         <div className="flex flex-col items-center">
             {/* Logo + Title */}
             <div className="flex flex-col items-center">
-                <Image
-                    src="/logo.png"
-                    width="56"
-                    height="56"
-                    alt="Logo"
-                    priority
-                />
+                <Image src="/logo.png" width="56" height="56" alt="Logo" priority />
                 <h1 className="mt-4 text-2xl font-semibold text-neutral-800">
                     Login to Housify
                 </h1>
@@ -102,7 +100,10 @@ export default function SignIn() {
                                     placeholder="Username or email"
                                     value={formData.username}
                                     onChange={(e) =>
-                                        setFormData({ ...formData, username: e.target.value })
+                                        setFormData({
+                                            ...formData,
+                                            username: e.target.value,
+                                        })
                                     }
                                     className="pl-10 bg-white/80 border-neutral-300 text-neutral-800"
                                 />
@@ -120,6 +121,12 @@ export default function SignIn() {
                                 <Label htmlFor="password" className="text-neutral-700">
                                     Password
                                 </Label>
+                                <Link
+                                    href="/forget-password"
+                                    className="text-sm text-primary font-medium hover:underline"
+                                >
+                                    Forgot Password?
+                                </Link>
                             </div>
                             <div className="mt-2 relative">
                                 <Input
@@ -128,7 +135,10 @@ export default function SignIn() {
                                     placeholder="Password"
                                     value={formData.password}
                                     onChange={(e) =>
-                                        setFormData({ ...formData, password: e.target.value })
+                                        setFormData({
+                                            ...formData,
+                                            password: e.target.value,
+                                        })
                                     }
                                     className="pl-10 bg-white/80 border-neutral-300 text-neutral-800"
                                 />
@@ -159,7 +169,10 @@ export default function SignIn() {
                                     id="remember"
                                     checked={formData.remember}
                                     onCheckedChange={(checked) =>
-                                        setFormData({ ...formData, remember: Boolean(checked) })
+                                        setFormData({
+                                            ...formData,
+                                            remember: Boolean(checked),
+                                        })
                                     }
                                 />
                                 <Label htmlFor="remember" className="text-neutral-700">
@@ -170,10 +183,24 @@ export default function SignIn() {
 
                         {/* Submit */}
                         <Button
-                            className="w-full bg-primary text-white hover:brightness-95 text-md"
-                            onClick={() => console.log(formData)}
+                            onClick={handleLogin}
+                            disabled={isSubmitting}
+                            className={`w-full text-sm transition ${isSubmitting
+                                    ? "bg-primary/70 cursor-not-allowed"
+                                    : "bg-primary hover:brightness-95"
+                                } text-white`}
                         >
-                            Log In
+                            {isSubmitting ? (
+                                <span className="flex items-center gap-2">
+                                    <div className="h-4 w-4 border-2 border-t-transparent border-white rounded-full animate-spin" />
+                                    Logging in...
+                                </span>
+                            ) : (
+                                <>
+                                    <LockKeyholeOpen size={16} className="mr-2" />
+                                    Login
+                                </>
+                            )}
                         </Button>
                     </div>
                 </div>
