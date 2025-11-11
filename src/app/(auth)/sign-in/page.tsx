@@ -197,18 +197,6 @@ export default function SignIn() {
                             </Link>
                         </div>
                     </div>
-
-                    {/* ✨ Replace dotted gradient with dots.png image */}
-                    <div className="relative w-full h-16 overflow-hidden">
-                        <Image
-                            src="/svg/dots.png"
-                            alt="Dotted background"
-                            fill
-                            className="object-cover opacity-70"
-                            sizes="100vw"
-                            priority
-                        />
-                    </div>
                 </div>
             </div>
         </div>
