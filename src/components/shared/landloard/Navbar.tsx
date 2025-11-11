@@ -65,7 +65,7 @@ const LandlordNavbar = () => {
         >
             {/* Logo only (no text) */}
             <div className="hidden sm:flex items-center gap-2 pl-2">
-                <Image src="/logo.png" alt="Housify Logo" width={28} height={28} priority />
+                <Image src="/logo.png" alt="Housify Logo" width={28} height={28} loading="lazy" />
             </div>
 
             {/* Navigation Links */}
@@ -79,14 +79,14 @@ const LandlordNavbar = () => {
                             key={item.name}
                             onClick={() => router.push(item.href)}
                             className={cn(
-                                "group flex items-center gap-2 px-3 py-2 rounded-full transition-all text-sm",
+                                "group flex items-center gap-2 px-3 py-2 rounded-full transition-all text-xs",
                                 isActive
                                     ? "bg-primary text-white"
                                     : "text-neutral-600 hover:text-primary hover:bg-primary/10"
                             )}
                         >
                             <Icon
-                                size={20}
+                                size={14}
                                 strokeWidth={1.8}
                                 className={isActive ? "text-white" : "text-neutral-600 group-hover:text-primary"}
                             />
@@ -114,7 +114,7 @@ const LandlordNavbar = () => {
                     <SheetContent
                         side="bottom"
                         className="
-              bg-white/60 backdrop-blur-2xl border-t border-white/40
+              bg-white backdrop-blur-2xl
               shadow-[0_-8px_30px_rgba(0,0,0,0.1)] rounded-t-2xl
               transition-all duration-300
             "
