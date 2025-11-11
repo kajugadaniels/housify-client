@@ -1,3 +1,4 @@
+import LandlordNavbar from "@/components/shared/landloard/Navbar";
 import React from "react";
 import type { ReactNode } from "react";
 
@@ -6,7 +7,7 @@ export default function LandlordLayout({
 }: Readonly<{ children: ReactNode }>) {
     return (
         <div>
-            Landlord Layout
+            <LandlordNavbar />
             {children}
         </div>
     );
