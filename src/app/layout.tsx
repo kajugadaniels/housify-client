@@ -14,7 +14,7 @@ export const metadata: Metadata = {
         "Housify is a modern rental platform that connects tenants and landlords with simplicity. Discover, book, and manage apartments, rooms, penthouses, and more — all in one professional dashboard with secure online payments, complaint management, and real-time updates.",
     icons: {
         icon: "/logo.png",
-        shortcut: "/favicon.ico",
+        shortcut: "/favicon.png",
         apple: "/logo.png",
     },
     openGraph: {
