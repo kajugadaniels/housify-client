@@ -3,42 +3,35 @@ import React from "react";
 import type { ReactNode } from "react";
 
 export default function LandlordLayout({
-  children,
+    children,
 }: Readonly<{ children: ReactNode }>) {
-  return (
-    <div
-      className="
-        relative min-h-screen
-        bg-[#f9fafb] text-neutral-800
+    return (
+        <div
+            className="
+        relative min-h-screen w-full
+        bg-white
         flex flex-col
         overflow-x-hidden
       "
-    >
-      {/* Page Content Wrapper */}
-      <main
-        className="
+        >
+            {/* Main scrollable content area */}
+            <main
+                className="
           flex-1 w-full
-          px-4 sm:px-6 lg:px-8
-          pt-10 pb-32
-          max-w-7xl mx-auto
-          transition-all duration-300
+          px-4 sm:px-6 md:px-10 lg:px-16 xl:px-24
+          py-8 sm:py-10 md:py-12
+          overflow-y-auto
+          scroll-smooth
+          scrollbar-thin scrollbar-thumb-neutral-300 scrollbar-thumb-rounded-full
         "
-      >
-        {children}
-      </main>
+            >
+                <div className="max-w-6xl mx-auto w-full">
+                    {children}
+                </div>
+            </main>
 
-      {/* Floating Glassy Navbar */}
-      <LandlordNavbar />
-
-      {/* Soft background gradient for depth */}
-      <div
-        aria-hidden
-        className="
-          pointer-events-none fixed inset-0
-          bg-[radial-gradient(circle_at_bottom,rgba(255,255,255,0.6)_0%,transparent_80%)]
-          z-[0]
-        "
-      />
-    </div>
-  );
+            {/* Fixed bottom navbar (does not move) */}
+            <LandlordNavbar />
+        </div>
+    );
 }
