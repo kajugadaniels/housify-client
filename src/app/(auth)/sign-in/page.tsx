@@ -7,8 +7,19 @@ import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import * as React from "react";
-import { Eye, EyeOff, Lock, LockKeyholeOpen, User } from "lucide-react";
+import { toast } from "sonner";
+import {
+    Eye,
+    EyeOff,
+    Lock,
+    LockKeyholeOpen,
+    User,
+} from "lucide-react";
+
+// Import landlords data (mocked local DB)
+import data from "@/data.json"; // ✅ make sure this file exists in your `src` directory
 
 export default function SignIn() {
     const [loading, setLoading] = React.useState(true);
@@ -19,18 +30,59 @@ export default function SignIn() {
         remember: true,
     });
     const [isSubmitting, setIsSubmitting] = React.useState(false);
+    const router = useRouter();
 
     React.useEffect(() => {
         const timer = setTimeout(() => setLoading(false), 1500);
         return () => clearTimeout(timer);
     }, []);
 
+    // ------------------------------------------------------------
+    // Handle Login Logic
+    // ------------------------------------------------------------
     const handleLogin = async () => {
+        const { username, password } = formData;
+
+        if (!username || !password) {
+            toast.error("Please enter your email and password.");
+            return;
+        }
+
         setIsSubmitting(true);
-        // simulate API delay
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        console.log("Logging in with:", formData);
-        setIsSubmitting(false);
+
+        try {
+            // Simulate API latency
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+
+            // Check credentials in landlords
+            const landlord = data.landlords.find(
+                (l) =>
+                    (l.email.toLowerCase() === username.toLowerCase() ||
+                        l.name.toLowerCase() === username.toLowerCase()) &&
+                    l.password === password
+            );
+
+            if (!landlord) {
+                toast.error("Invalid credentials. Please try again.");
+                setIsSubmitting(false);
+                return;
+            }
+
+            // Save landlord to localStorage
+            localStorage.setItem("housify_landlord", JSON.stringify(landlord));
+
+            toast.success(`Welcome back, ${landlord.name.split(" ")[0]}! 👋`);
+
+            // Delay redirect for UX smoothness
+            setTimeout(() => {
+                router.push("/landlord/dashboard");
+            }, 1200);
+        } catch (error) {
+            toast.error("An unexpected error occurred. Please try again.");
+            console.error(error);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     // ------------------------------------------------------------
@@ -39,22 +91,16 @@ export default function SignIn() {
     if (loading) {
         return (
             <div className="flex flex-col items-center w-full animate-pulse">
-                {/* Logo & title placeholders */}
                 <Skeleton className="h-14 w-14 rounded-full bg-neutral-200" />
                 <Skeleton className="mt-4 h-6 w-48 bg-neutral-200" />
 
-                {/* Glass card skeleton */}
                 <div className="mt-10 w-full px-6">
                     <div className="mx-auto w-full max-w-xl rounded-2xl overflow-hidden border border-neutral-200/60 bg-white backdrop-blur-xl shadow-[0_8px_25px_rgba(0,0,0,0.06)]">
                         <div className="p-8 md:p-10 space-y-6">
-                            <div className="space-y-2">
-                                <Skeleton className="h-4 w-36 bg-neutral-200" />
-                                <Skeleton className="h-11 w-full bg-neutral-200" />
-                            </div>
-                            <div className="space-y-2">
-                                <Skeleton className="h-4 w-24 bg-neutral-200" />
-                                <Skeleton className="h-11 w-full bg-neutral-200" />
-                            </div>
+                            <Skeleton className="h-4 w-36 bg-neutral-200" />
+                            <Skeleton className="h-11 w-full bg-neutral-200" />
+                            <Skeleton className="h-4 w-24 bg-neutral-200" />
+                            <Skeleton className="h-11 w-full bg-neutral-200" />
                             <Skeleton className="h-5 w-32 bg-neutral-200" />
                             <Skeleton className="h-11 w-full bg-primary/60" />
                         </div>
@@ -81,23 +127,23 @@ export default function SignIn() {
             <div className="mt-10 w-full px-6">
                 <div
                     className="
-                    mx-auto w-full max-w-xl rounded-2xl overflow-hidden
-                    bg-white backdrop-blur-2xl
-                    shadow-[0_8px_25px_rgba(0,0,0,0.08)]
-                    ring-1 ring-white/40
-                    transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,0,0,0.1)]
+                        mx-auto w-full max-w-xl rounded-2xl overflow-hidden
+                        bg-white backdrop-blur-2xl
+                        shadow-[0_8px_25px_rgba(0,0,0,0.08)]
+                        ring-1 ring-white/40
+                        transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,0,0,0.1)]
                     "
                 >
                     <div className="p-8 md:p-10 space-y-6">
                         {/* Username */}
                         <div>
                             <Label htmlFor="username" className="text-neutral-700">
-                                Username or email
+                                Email or Name
                             </Label>
                             <div className="mt-2 relative">
                                 <Input
                                     id="username"
-                                    placeholder="Username or email"
+                                    placeholder="Enter your email or name"
                                     value={formData.username}
                                     onChange={(e) =>
                                         setFormData({
@@ -147,7 +193,6 @@ export default function SignIn() {
                                     size={18}
                                     strokeWidth={1.5}
                                 />
-
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword((s) => !s)}
