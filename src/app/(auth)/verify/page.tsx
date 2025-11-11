@@ -108,7 +108,7 @@ export default function Verify() {
                 <h1 className="mt-4 text-2xl font-semibold text-neutral-800">
                     Verify Your Account
                 </h1>
-                <p className="text-white mt-2 text-sm">
+                <p className="text-neutral-600 mt-2 text-sm">
                     Enter the 6-digit code sent to your email or phone
                 </p>
             </div>
