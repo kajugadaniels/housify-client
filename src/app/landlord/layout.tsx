@@ -6,9 +6,32 @@ export default function LandlordLayout({
     children,
 }: Readonly<{ children: ReactNode }>) {
     return (
-        <div>
+        <div
+            className="
+        relative min-h-screen w-full
+        bg-white
+        flex flex-col
+        overflow-x-hidden
+      "
+        >
+            {/* Main scrollable content area */}
+            <main
+                className="
+          flex-1 w-full
+          px-4 sm:px-6 md:px-10 lg:px-16 xl:px-24
+          py-8 sm:py-10 md:py-12
+          overflow-y-auto
+          scroll-smooth
+          scrollbar-thin scrollbar-thumb-neutral-300 scrollbar-thumb-rounded-full
+        "
+            >
+                <div className="max-w-6xl mx-auto w-full">
+                    {children}
+                </div>
+            </main>
+
+            {/* Fixed bottom navbar (does not move) */}
             <LandlordNavbar />
-            {children}
         </div>
     );
 }
