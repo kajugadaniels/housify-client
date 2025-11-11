@@ -64,7 +64,7 @@ const LandlordNavbar = () => {
                         )}
                     >
                         <Icon
-                            size={20}
+                            size={14}
                             strokeWidth={1.8}
                             className={cn(
                                 "transition-all duration-300",
@@ -73,7 +73,7 @@ const LandlordNavbar = () => {
                         />
                         <span
                             className={cn(
-                                "hidden sm:inline text-sm font-medium transition-all",
+                                "hidden sm:inline text-xs font-medium transition-all",
                                 isActive ? "text-white" : "text-neutral-700"
                             )}
                         >
