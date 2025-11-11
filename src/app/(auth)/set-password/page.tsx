@@ -6,12 +6,21 @@ import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image";
 import * as React from "react";
-import { CheckCircle2, XCircle, Lock } from "lucide-react";
+import {
+    CheckCircle2,
+    XCircle,
+    Lock,
+    Eye,
+    EyeOff,
+    KeyRound,
+} from "lucide-react";
 
 export default function SetPassword() {
     const [loading, setLoading] = React.useState(true);
     const [password, setPassword] = React.useState("");
     const [confirmPassword, setConfirmPassword] = React.useState("");
+    const [showPassword, setShowPassword] = React.useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
     const [showRequirements, setShowRequirements] = React.useState(false);
     const [isSubmitting, setIsSubmitting] = React.useState(false);
 
@@ -82,7 +91,7 @@ export default function SetPassword() {
                 <div
                     className="
                         mx-auto w-full max-w-xl rounded-2xl overflow-hidden
-                        bg-white/70 backdrop-blur-2xl
+                        bg-white backdrop-blur-2xl
                         shadow-[0_8px_25px_rgba(0,0,0,0.08)]
                         ring-1 ring-white/40
                         transition-all duration-300 hover:shadow-[0_10px_30px_rgba(0,0,0,0.1)]
@@ -97,42 +106,55 @@ export default function SetPassword() {
                             <div className="mt-2 relative">
                                 <Input
                                     id="password"
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     onFocus={() => setShowRequirements(true)}
                                     placeholder="Enter your password"
-                                    className="pl-10 bg-white/80 border-neutral-300 text-neutral-800"
+                                    className="pl-10 pr-10 bg-white border-neutral-300 text-neutral-800"
                                 />
                                 <Lock
                                     className="absolute left-3 top-3 text-neutral-400"
                                     size={18}
                                     strokeWidth={1.5}
                                 />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-3 top-2.5 text-neutral-500 hover:text-neutral-800 transition"
+                                    aria-label={
+                                        showPassword ? "Hide password" : "Show password"
+                                    }
+                                >
+                                    {showPassword ? (
+                                        <EyeOff size={18} strokeWidth={1.5} />
+                                    ) : (
+                                        <Eye size={18} strokeWidth={1.5} />
+                                    )}
+                                </button>
                             </div>
 
                             {/* Live Requirements */}
                             {showRequirements && (
-                                <div className="mt-4 space-y-2 text-sm">
+                                <div className="mt-4 space-y-2 text-xs">
                                     {requirements.map((req, index) => {
                                         const valid = req.test(password);
                                         return (
                                             <div
                                                 key={index}
-                                                className={`flex items-center gap-2 transition-colors ${
-                                                    valid
+                                                className={`flex items-center gap-2 transition-colors ${valid
                                                         ? "text-green-600"
                                                         : "text-neutral-500"
-                                                }`}
+                                                    }`}
                                             >
                                                 {valid ? (
                                                     <CheckCircle2
-                                                        size={16}
+                                                        size={14}
                                                         className="text-green-600"
                                                     />
                                                 ) : (
                                                     <XCircle
-                                                        size={16}
+                                                        size={14}
                                                         className="text-neutral-400"
                                                     />
                                                 )}
@@ -152,29 +174,49 @@ export default function SetPassword() {
                             <div className="mt-2 relative">
                                 <Input
                                     id="confirm-password"
-                                    type="password"
+                                    type={showConfirmPassword ? "text" : "password"}
                                     value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    onChange={(e) =>
+                                        setConfirmPassword(e.target.value)
+                                    }
                                     placeholder="Re-enter your password"
-                                    className="pl-10 bg-white/80 border-neutral-300 text-neutral-800"
+                                    className="pl-10 pr-10 bg-white border-neutral-300 text-neutral-800"
                                 />
                                 <Lock
                                     className="absolute left-3 top-3 text-neutral-400"
                                     size={18}
                                     strokeWidth={1.5}
                                 />
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        setShowConfirmPassword(!showConfirmPassword)
+                                    }
+                                    className="absolute right-3 top-2.5 text-neutral-500 hover:text-neutral-800 transition"
+                                    aria-label={
+                                        showConfirmPassword
+                                            ? "Hide password"
+                                            : "Show password"
+                                    }
+                                >
+                                    {showConfirmPassword ? (
+                                        <EyeOff size={18} strokeWidth={1.5} />
+                                    ) : (
+                                        <Eye size={18} strokeWidth={1.5} />
+                                    )}
+                                </button>
                             </div>
+
                             {confirmPassword && (
                                 <p
-                                    className={`mt-2 text-sm font-medium transition ${
-                                        isMatch
+                                    className={`mt-2 text-xs font-medium transition ${isMatch
                                             ? "text-green-600"
                                             : "text-red-500"
-                                    }`}
+                                        }`}
                                 >
                                     {isMatch
-                                        ? "Passwords match ✅"
-                                        : "Passwords do not match ❌"}
+                                        ? "Passwords match"
+                                        : "Passwords do not match"}
                                 </p>
                             )}
                         </div>
@@ -183,11 +225,10 @@ export default function SetPassword() {
                         <Button
                             onClick={handleSubmit}
                             disabled={!isPasswordValid || !isMatch || isSubmitting}
-                            className={`w-full text-md transition ${
-                                !isPasswordValid || !isMatch
+                            className={`w-full text-sm transition ${!isPasswordValid || !isMatch
                                     ? "bg-neutral-400 text-white cursor-not-allowed opacity-80"
                                     : "bg-primary text-white hover:brightness-95"
-                            }`}
+                                }`}
                         >
                             {isSubmitting ? (
                                 <span className="flex items-center gap-2">
@@ -195,21 +236,12 @@ export default function SetPassword() {
                                     Setting Password...
                                 </span>
                             ) : (
-                                "Set Password"
+                                <>
+                                    <KeyRound size={18} className="mr-2" />
+                                    Set Password
+                                </>
                             )}
                         </Button>
-                    </div>
-
-                    {/* Dots image footer */}
-                    <div className="relative w-full h-16 overflow-hidden">
-                        <Image
-                            src="/svg/dots.png"
-                            alt="Dotted background"
-                            fill
-                            className="object-cover opacity-70"
-                            sizes="100vw"
-                            priority
-                        />
                     </div>
                 </div>
             </div>

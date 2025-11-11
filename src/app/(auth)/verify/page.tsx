@@ -158,7 +158,7 @@ export default function Verify() {
                             className={`
                                 w-full text-md transition
                                 ${resendTimer > 0
-                                    ? "bg-primary text-white hover:brightness-95"
+                                    ? "bg-primary text-white hover:brightness-95 text-sm"
                                     : "bg-neutral-400 text-white cursor-not-allowed opacity-80"
                                 }
                             `}
