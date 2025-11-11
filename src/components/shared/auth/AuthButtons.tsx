@@ -1,50 +1,26 @@
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
-import Logo from "@/components/shared/Logo";
-import AuthButtons from "./AuthButtons";
-import { Skeleton } from "@/components/ui/skeleton";
+import React from "react";
+import { Button } from "@/components/ui/button";
 
 /**
- * AuthHeader
- * - Left: Logo (link to home)
- * - Right: Sign in / Sign up buttons
- * - Includes skeleton loader simulation (mimics loading states)
+ * AuthButtons
+ * - Shows only Sign In & Sign Up buttons for now
+ * - No backend or state management dependencies
  */
-const AuthHeader: React.FC = () => {
-    const [loading, setLoading] = useState(true);
-
-    // Simulate small loading delay (you can remove this later)
-    useEffect(() => {
-        const timer = setTimeout(() => setLoading(false), 800);
-        return () => clearTimeout(timer);
-    }, []);
-
+const AuthButtons: React.FC = () => {
     return (
-        <div className="bg-white/60 backdrop-blur border-b border-slate-200">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
-                <div className="flex items-center justify-between h-16">
-                    <div className="flex items-center gap-4">
-                        <Link href="/" aria-label="Housify home">
-                            <div className="flex items-center gap-3 cursor-pointer">
-                                <Logo className="h-9 w-auto" />
-                            </div>
-                        </Link>
-                    </div>
+        <div className="flex items-center gap-2">
+            <Link href="/auth/signin">
+                <Button variant="ghost" className="px-4 py-2">
+                    Sign in
+                </Button>
+            </Link>
 
-                    <div className="flex items-center gap-3">
-                        {loading ? (
-                            <div className="flex items-center gap-2">
-                                <Skeleton className="h-9 w-24 rounded" />
-                                <Skeleton className="h-9 w-24 rounded" />
-                            </div>
-                        ) : (
-                            <AuthButtons />
-                        )}
-                    </div>
-                </div>
-            </div>
+            <Link href="/auth/signup">
+                <Button className="px-4 py-2">Sign up</Button>
+            </Link>
         </div>
     );
 };
 
-export default AuthHeader;
+export default AuthButtons;
