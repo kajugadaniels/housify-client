@@ -24,6 +24,34 @@ const LandlordNavbar = () => {
     const [isSheetOpen, setIsSheetOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement | null>(null);
 
+    // Optional: subtle 3D tilt effect on hover for large screens
+    useEffect(() => {
+        const navbar = document.querySelector(".navbar-3d");
+        if (!navbar) return;
+
+        const handleMouseMove = (e: MouseEvent) => {
+            const rect = navbar.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            const rotateX = (y / rect.height) * -4;
+            const rotateY = (x / rect.width) * 4;
+            (navbar as HTMLElement).style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        };
+
+        const resetTilt = () => {
+            (navbar as HTMLElement).style.transform = `rotateX(0deg) rotateY(0deg)`;
+        };
+
+        navbar.addEventListener("mousemove", handleMouseMove);
+        navbar.addEventListener("mouseleave", resetTilt);
+
+        return () => {
+            navbar.removeEventListener("mousemove", handleMouseMove);
+            navbar.removeEventListener("mouseleave", resetTilt);
+        };
+    }, []);
+
+
     useEffect(() => {
         setActive(pathname);
         const storedLandlord = localStorage.getItem("housify_landlord");
