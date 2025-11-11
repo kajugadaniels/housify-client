@@ -5,6 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
 import * as React from "react";
 
 export default function SignIn() {
@@ -29,7 +30,7 @@ export default function SignIn() {
                 <div className="mt-10 w-full max-w-xl p-10 rounded-2xl border bg-white/70 backdrop-blur-md space-y-4">
                     <Skeleton className="h-10 w-full bg-neutral-200" />
                     <Skeleton className="h-10 w-full bg-neutral-200" />
-                    <Skeleton className="h-12 w-full bg-[#f6f7b4]" />
+                    <Skeleton className="h-12 w-full bg-primary/50" />
                 </div>
             </div>
         );
@@ -105,12 +106,12 @@ export default function SignIn() {
                                 <Label htmlFor="password" className="text-neutral-700">
                                     Password
                                 </Label>
-                                <a
-                                    href="#"
-                                    className="text-sm text-[#ECF15E] font-medium hover:underline"
+                                <Link
+                                    href="/forget-password"
+                                    className="text-sm text-primary font-medium hover:underline"
                                 >
                                     Forgot Password?
-                                </a>
+                                </Link>
                             </div>
                             <div className="mt-2 relative">
                                 <Input
@@ -204,7 +205,7 @@ export default function SignIn() {
 
                         {/* Submit */}
                         <Button
-                            className="w-full bg-[#ECF15E] text-neutral-900 hover:brightness-95 text-lg py-3"
+                            className="w-full bg-primary text-neutral-900 hover:brightness-95 text-md"
                             onClick={() => console.log(formData)}
                         >
                             Log In
@@ -212,35 +213,17 @@ export default function SignIn() {
 
                         <div className="text-center text-sm text-neutral-600">
                             Do not have an account?{" "}
-                            <a
-                                href="#"
-                                className="text-[#ECF15E] font-medium hover:underline"
+                            <Link
+                                href="/sign-up"
+                                className="text-primary font-medium hover:underline"
                             >
                                 Sign Up
-                            </a>
+                            </Link>
                         </div>
                     </div>
 
                     <div className="bg-[linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-size-[14px_14px] opacity-40 h-16" />
                 </div>
-            </div>
-
-            <div className="mt-8 text-sm text-neutral-600 flex items-center gap-3">
-                <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    className="opacity-60"
-                >
-                    <path
-                        d="M12 2v20M2 12h20"
-                        stroke="rgba(0,0,0,0.25)"
-                        strokeWidth="1.2"
-                        strokeLinecap="round"
-                    />
-                </svg>
-                <span>English</span>
             </div>
         </div>
     );
