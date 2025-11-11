@@ -1,6 +1,5 @@
 import Link from "next/link";
 import React from "react";
-import useAuthStore from "@/lib/store/useAuthStore";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
 import {
@@ -10,6 +9,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
+import useAuthStore from "@/lib/store/useAuthStore";
 
 /**
  * AuthButtons

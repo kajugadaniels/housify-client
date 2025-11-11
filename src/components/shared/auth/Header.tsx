@@ -1,9 +1,9 @@
 import Link from "next/link";
 import React from "react";
-import Logo from "@/components/shared/Logo";
+import { Skeleton } from "@/components/ui/skeleton";
+import Logo from "../Logo";
 import AuthButtons from "./AuthButtons";
 import useAuthStore from "@/lib/store/useAuthStore";
-import { Skeleton } from "@/components/ui/skeleton";
 
 /**
  * AuthHeader
