@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "sonner"; // Sonner toaster available globally
 
 const dmSans = DM_Sans({
     variable: "--font-dm-sans",
@@ -11,7 +12,7 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
     title: "Housify — Smart Space & Apartment Rentals",
     description:
-        "Housify is a modern rental platform that connects tenants and landlords with simplicity. Discover, book, and manage apartments, rooms, penthouses, and more — all in one professional dashboard with secure online payments, complaint management, and real-time updates.",
+        "Housify is a modern rental platform that connects tenants and landlords with simplicity. Discover, book, and manage apartments, rooms, penthouses, and more — secure online payments, complaint management, and real-time updates.",
     icons: {
         icon: "/logo.png",
         shortcut: "/favicon.png",
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
     openGraph: {
         title: "Housify — Smart Space & Apartment Rentals",
         description:
-            "Find the perfect space for living or business. Housify simplifies renting and management for both tenants and landlords.",
+            "Find and manage rental spaces effortlessly. Housify simplifies renting for tenants and landlords.",
         url: "https://housify.app",
         siteName: "Housify",
         images: [
@@ -37,8 +38,7 @@ export const metadata: Metadata = {
     twitter: {
         card: "summary_large_image",
         title: "Housify — Smart Space & Apartment Rentals",
-        description:
-            "Explore and rent premium apartments and spaces effortlessly with Housify.",
+        description: "Explore and rent premium apartments and spaces effortlessly with Housify.",
         images: ["/logo.png"],
     },
 };
@@ -50,9 +50,8 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body
-                className={`${dmSans.variable} antialiased bg-background text-foreground`}
-            >
+            <body className={`${dmSans.variable} antialiased bg-background text-foreground`}>
+                <Toaster position="top-right" richColors />
                 {children}
             </body>
         </html>
