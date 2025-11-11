@@ -6,7 +6,7 @@ export default function AuthLayout({
     children,
 }: Readonly<{ children: ReactNode }>) {
     return (
-        <div className="min-h-screen w-full relative bg-gradient-to-b from-[#f7f8fa] via-[#f9fafb] to-[#eceef1]">
+        <div className="min-h-screen w-full relative bg-linear-to-b from-[#f7f8fa] via-[#f9fafb] to-[#eceef1]">
             {/* Soft top glow and grid lines */}
             <div aria-hidden className="absolute inset-x-0 top-0 h-64 overflow-hidden">
                 <div className="absolute inset-0 -z-10">
