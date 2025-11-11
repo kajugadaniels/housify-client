@@ -53,7 +53,7 @@ const LandlordNavbar = () => {
         <div
             className="
         fixed bottom-6 left-1/2 -translate-x-1/2
-        w-[90%] sm:w-[60%] lg:w-[40%]
+        w-[90%] sm:w-auto lg:max-w-[60%] xl:max-w-[50%] 2xl:max-w-[45%]
         bg-white/60 backdrop-blur-xl
         border border-white/40
         shadow-[0_4px_30px_rgba(0,0,0,0.05)]
@@ -62,14 +62,23 @@ const LandlordNavbar = () => {
         px-3 sm:px-5 py-2 sm:py-3
         transition-all duration-300
       "
+            style={{
+                maxWidth: "900px", // hard max cap
+            }}
         >
             {/* Logo only (no text) */}
-            <div className="hidden sm:flex items-center gap-2 pl-2">
+            <div className="hidden sm:flex items-center gap-2 pl-2 shrink-0">
                 <Image src="/logo.png" alt="Housify Logo" width={28} height={28} loading="lazy" />
             </div>
 
-            {/* Navigation Links */}
-            <div className="hidden sm:flex items-center justify-center gap-3 flex-1">
+            {/* Scrollable Navigation Links */}
+            <div
+                className="
+          hidden sm:flex items-center justify-start gap-3 flex-1 overflow-x-auto
+          scrollbar-thin scrollbar-thumb-neutral-300 scrollbar-thumb-rounded-full
+          hover:scrollbar-thumb-neutral-400 scroll-smooth
+        "
+            >
                 {LANDLORD_NAV_LINKS.map((item) => {
                     const Icon = item.icon;
                     const isActive = active === item.href;
@@ -79,7 +88,7 @@ const LandlordNavbar = () => {
                             key={item.name}
                             onClick={() => router.push(item.href)}
                             className={cn(
-                                "group flex items-center gap-2 px-3 py-2 rounded-full transition-all text-xs",
+                                "group flex items-center gap-2 px-3 py-2 rounded-full transition-all text-xs whitespace-nowrap",
                                 isActive
                                     ? "bg-primary text-white"
                                     : "text-neutral-600 hover:text-primary hover:bg-primary/10"
@@ -114,8 +123,9 @@ const LandlordNavbar = () => {
                     <SheetContent
                         side="bottom"
                         className="
-              bg-white backdrop-blur-2xl
+              bg-white/70 backdrop-blur-2xl
               shadow-[0_-8px_30px_rgba(0,0,0,0.1)] rounded-t-2xl
+              border-t border-white/40
               transition-all duration-300
             "
                     >
@@ -158,7 +168,7 @@ const LandlordNavbar = () => {
             </div>
 
             {/* Profile Dropdown */}
-            <div className="relative" ref={dropdownRef}>
+            <div className="relative shrink-0" ref={dropdownRef}>
                 <button
                     onClick={() => setIsDropdownOpen((p) => !p)}
                     className="flex flex-col sm:flex-row items-center sm:gap-2 px-3 py-2 rounded-full transition-all hover:bg-primary/10"

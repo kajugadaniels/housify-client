@@ -31,8 +31,8 @@ export const LANDLORD_NAV_LINKS = [
         icon: CreditCard,
     },
     {
-        name: "Analytics",
-        href: "/landlord/analytics",
+        name: "Reports",
+        href: "/landlord/reports",
         icon: BarChart3,
     },
 ];
