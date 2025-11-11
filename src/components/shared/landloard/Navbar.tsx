@@ -4,7 +4,14 @@ import React, { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { LANDLORD_NAV_LINKS, LANDLORD_PROFILE_DROPDOWN } from "@/constants/landlord";
 import { cn } from "@/lib/utils";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+    Sheet,
+    SheetContent,
+    SheetTrigger,
+    SheetHeader,
+    SheetTitle,
+    SheetClose,
+} from "@/components/ui/sheet";
 import { Menu, X, UserCircle } from "lucide-react";
 import Image from "next/image";
 
@@ -56,10 +63,9 @@ const LandlordNavbar = () => {
         transition-all duration-300
       "
         >
-            {/* Logo */}
+            {/* Logo only (no text) */}
             <div className="hidden sm:flex items-center gap-2 pl-2">
-                <Image src="/logo.png" alt="Housify Logo" width={28} height={28} />
-                <span className="text-sm font-semibold text-neutral-800">Housify</span>
+                <Image src="/logo.png" alt="Housify Logo" width={28} height={28} priority />
             </div>
 
             {/* Navigation Links */}
@@ -105,13 +111,30 @@ const LandlordNavbar = () => {
                             <Menu size={22} className="text-neutral-700" />
                         </button>
                     </SheetTrigger>
-                    <SheetContent side="bottom" className="bg-white/60 backdrop-blur-xl border-t border-white/40">
+                    <SheetContent
+                        side="bottom"
+                        className="
+              bg-white/60 backdrop-blur-2xl border-t border-white/40
+              shadow-[0_-8px_30px_rgba(0,0,0,0.1)] rounded-t-2xl
+              transition-all duration-300
+            "
+                    >
+                        {/* Accessible Header */}
+                        <SheetHeader>
+                            <SheetTitle className="sr-only">Mobile Navigation Menu</SheetTitle>
+                        </SheetHeader>
+
                         <div className="flex justify-between items-center mb-4">
-                            <h2 className="text-lg font-semibold text-neutral-800">Navigation</h2>
-                            <button onClick={() => setIsSheetOpen(false)} className="p-2 rounded-md hover:bg-neutral-100">
-                                <X size={20} />
-                            </button>
+                            <div className="flex items-center gap-2">
+                                <Image src="/logo.png" alt="Logo" width={28} height={28} />
+                            </div>
+                            <SheetClose asChild>
+                                <button className="p-2 rounded-md hover:bg-neutral-100 transition">
+                                    <X size={20} />
+                                </button>
+                            </SheetClose>
                         </div>
+
                         <div className="grid grid-cols-3 gap-4 pb-6">
                             {LANDLORD_NAV_LINKS.map((item) => {
                                 const Icon = item.icon;
