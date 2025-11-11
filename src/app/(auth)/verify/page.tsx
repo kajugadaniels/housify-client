@@ -12,12 +12,15 @@ export default function Verify() {
     const [otp, setOtp] = React.useState(Array(6).fill(""));
     const [resendTimer, setResendTimer] = React.useState(30);
     const inputsRef = React.useRef<(HTMLInputElement | null)[]>([]);
+    const [isVerifying, setIsVerifying] = React.useState(false);
 
+    // Fake skeleton loader on mount
     React.useEffect(() => {
         const timer = setTimeout(() => setLoading(false), 1200);
         return () => clearTimeout(timer);
     }, []);
 
+    // Countdown logic
     React.useEffect(() => {
         if (resendTimer > 0) {
             const countdown = setInterval(() => {
@@ -27,7 +30,7 @@ export default function Verify() {
         }
     }, [resendTimer]);
 
-    // Handle OTP change
+    // OTP input handlers
     const handleChange = (value: string, index: number) => {
         if (/^\d*$/.test(value)) {
             const newOtp = [...otp];
@@ -45,13 +48,24 @@ export default function Verify() {
         }
     };
 
-    // Handle resend click
+    // Reset timer & OTP
     const handleResend = () => {
         setResendTimer(30);
         setOtp(Array(6).fill(""));
     };
 
-    // Skeleton loading (matches sign-in layout)
+    // Verify action simulation
+    const handleVerify = async () => {
+        setIsVerifying(true);
+        // Simulate network delay
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        setIsVerifying(false);
+        console.log("Verified OTP:", otp.join(""));
+    };
+
+    // ------------------------------------------------------------
+    // Skeleton loader (matches Sign-In form layout)
+    // ------------------------------------------------------------
     if (loading) {
         return (
             <div className="flex flex-col items-center w-full animate-pulse">
@@ -77,6 +91,9 @@ export default function Verify() {
         );
     }
 
+    // ------------------------------------------------------------
+    // Main Verify Page
+    // ------------------------------------------------------------
     return (
         <div className="flex flex-col items-center">
             {/* Logo + Title */}
@@ -96,7 +113,7 @@ export default function Verify() {
                 </p>
             </div>
 
-            {/* Card */}
+            {/* Glass Card */}
             <div className="mt-10 w-full px-6">
                 <div
                     className="
@@ -122,11 +139,13 @@ export default function Verify() {
                                     value={digit}
                                     onChange={(e) => handleChange(e.target.value, index)}
                                     onKeyDown={(e) => handleKeyDown(e, index)}
+                                    disabled={isVerifying}
                                     className="
                                         h-14 w-14 text-center text-xl font-medium text-neutral-800
-                                        bg-white/70 border border-neutral-300
+                                        bg-white/80 border border-neutral-300
                                         focus:ring-2 focus:ring-primary focus:border-primary/60
                                         rounded-lg transition-all
+                                        disabled:opacity-50 disabled:cursor-not-allowed
                                     "
                                 />
                             ))}
@@ -134,14 +153,30 @@ export default function Verify() {
 
                         {/* Verify Button */}
                         <Button
-                            onClick={() => console.log("OTP:", otp.join(""))}
-                            className="w-full bg-primary text-white hover:brightness-95 text-md"
+                            onClick={handleVerify}
+                            disabled={resendTimer === 0 ? false : isVerifying || otp.join("").length < 6}
+                            className={`
+                                w-full text-md transition
+                                ${resendTimer > 0
+                                    ? "bg-primary text-white hover:brightness-95"
+                                    : "bg-neutral-400 text-white cursor-not-allowed opacity-80"
+                                }
+                            `}
                         >
-                            <ShieldCheck size={18} className="mr-2" />
-                            Verify Account
+                            {isVerifying ? (
+                                <span className="flex items-center gap-2">
+                                    <div className="h-4 w-4 border-2 border-t-transparent border-white rounded-full animate-spin" />
+                                    Verifying...
+                                </span>
+                            ) : (
+                                <>
+                                    <ShieldCheck size={18} className="mr-2" />
+                                    Verify Account
+                                </>
+                            )}
                         </Button>
 
-                        {/* Resend OTP */}
+                        {/* Resend OTP Section */}
                         <div className="text-center text-sm text-neutral-600">
                             {resendTimer > 0 ? (
                                 <p>
