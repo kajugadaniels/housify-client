@@ -1,3 +1,5 @@
+import AuthHeader from "@/components/shared/auth/Header";
+
 export default function AuthLayout({
     children,
 }: Readonly<{
@@ -5,6 +7,7 @@ export default function AuthLayout({
 }>) {
     return (
         <div>
+            <AuthHeader />
             {children}
         </div>
     );
