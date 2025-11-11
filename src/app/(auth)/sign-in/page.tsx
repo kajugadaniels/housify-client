@@ -41,7 +41,7 @@ export default function SignIn() {
 
                 {/* Glass card skeleton */}
                 <div className="mt-10 w-full px-6">
-                    <div className="mx-auto w-full max-w-xl rounded-2xl overflow-hidden border border-neutral-200/60 bg-white/50 backdrop-blur-xl shadow-[0_8px_25px_rgba(0,0,0,0.06)]">
+                    <div className="mx-auto w-full max-w-xl rounded-2xl overflow-hidden border border-neutral-200/60 bg-white backdrop-blur-xl shadow-[0_8px_25px_rgba(0,0,0,0.06)]">
                         <div className="p-8 md:p-10 space-y-6">
                             <div className="space-y-2">
                                 <Skeleton className="h-4 w-36 bg-neutral-200" />
@@ -53,11 +53,6 @@ export default function SignIn() {
                             </div>
                             <Skeleton className="h-5 w-32 bg-neutral-200" />
                             <Skeleton className="h-11 w-full bg-primary/60" />
-                            <Skeleton className="h-4 w-40 bg-neutral-200 mx-auto" />
-                        </div>
-                        {/* dotted image skeleton footer */}
-                        <div className="relative w-full h-16 overflow-hidden">
-                            <Skeleton className="absolute inset-0 h-full w-full bg-neutral-200" />
                         </div>
                     </div>
                 </div>
@@ -109,7 +104,7 @@ export default function SignIn() {
                                     onChange={(e) =>
                                         setFormData({ ...formData, username: e.target.value })
                                     }
-                                    className="pl-10 bg-white/80 border-neutral-300 text-neutral-800 "
+                                    className="pl-10 bg-white/80 border-neutral-300 text-neutral-800"
                                 />
                                 <User
                                     className="absolute left-3 top-3 text-neutral-400"
@@ -125,12 +120,6 @@ export default function SignIn() {
                                 <Label htmlFor="password" className="text-neutral-700">
                                     Password
                                 </Label>
-                                <Link
-                                    href="/forget-password"
-                                    className="text-sm text-primary font-medium hover:underline"
-                                >
-                                    Forgot Password?
-                                </Link>
                             </div>
                             <div className="mt-2 relative">
                                 <Input
@@ -186,16 +175,6 @@ export default function SignIn() {
                         >
                             Log In
                         </Button>
-
-                        <div className="text-center text-sm text-neutral-600">
-                            Do not have an account?{" "}
-                            <Link
-                                href="/sign-up"
-                                className="text-primary font-medium hover:underline"
-                            >
-                                Sign Up
-                            </Link>
-                        </div>
                     </div>
                 </div>
             </div>
