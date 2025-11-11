@@ -40,7 +40,7 @@ export const LANDLORD_NAV_LINKS = [
 export const LANDLORD_PROFILE_DROPDOWN = [
     {
         name: "Edit Profile",
-        href: "/landlord/profile/edit",
+        href: "/landlord/profile",
         icon: UserCircle,
     },
     {
