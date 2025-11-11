@@ -1,4 +1,5 @@
 import AuthHeader from "@/components/shared/auth/Header";
+import Footer from "@/components/shared/Footer";
 
 export default function AuthLayout({
     children,
@@ -9,6 +10,7 @@ export default function AuthLayout({
         <div>
             <AuthHeader />
             {children}
+            <Footer />
         </div>
     );
 }
