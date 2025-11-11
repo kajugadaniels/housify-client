@@ -209,58 +209,50 @@ body {
   animation: sound-wave 1.2s ease-in-out infinite;
 }
 
-/* === 3D & Animation Enhancements === */
+/* ------------------ */
+/* 🔮 3D NAVBAR THEME */
+/* ------------------ */
 
-@keyframes fade-in-up {
-  0% {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in-up {
-  animation: fade-in-up 0.3s ease-out forwards;
-}
-
-/* 3D hover lighting effect */
 .navbar-3d {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.4),
-    rgba(255, 255, 255, 0.1)
-  );
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow:
-    0 4px 10px rgba(0, 0, 0, 0.05),
-    inset 0 1px rgba(255, 255, 255, 0.4);
-  transition: all 0.4s ease-in-out;
-}
-
-.navbar-3d::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.15), transparent 70%);
-  transition: transform 0.6s ease;
-  transform: translateX(-100%) rotate(30deg);
-  pointer-events: none;
-}
-
-.navbar-3d:hover::before {
-  transform: translateX(100%) rotate(30deg);
+    inset 0 0 1px rgba(255, 255, 255, 0.3),
+    0 4px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 9999px;
+  transition: all 0.3s ease;
 }
 
 .navbar-3d:hover {
+  transform: translateY(-2px);
   box-shadow:
-    0 10px 40px rgba(83, 118, 246, 0.25),
-    inset 0 1px 3px rgba(255, 255, 255, 0.4);
-  transform: translateY(-2px) scale(1.01);
+    inset 0 0 2px rgba(255, 255, 255, 0.2),
+    0 6px 25px rgba(0, 0, 0, 0.25);
+}
+
+.glass-button {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(16px);
+  transition: all 0.25s ease;
+}
+
+.glass-button:hover {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 2px 6px rgba(83, 118, 246, 0.3);
+  transform: scale(1.05);
+}
+
+@keyframes soft-glow {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(83, 118, 246, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(83, 118, 246, 0.5);
+  }
+}
+
+.navbar-glow {
+  animation: soft-glow 3s ease-in-out infinite;
 }
