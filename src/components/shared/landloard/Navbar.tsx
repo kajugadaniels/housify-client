@@ -67,7 +67,7 @@ const LandlordNavbar = () => {
             }}
         >
             {/* Logo only (no text) */}
-            <div className="hidden sm:flex items-center gap-2 pl-2 shrink-0">
+            <div className="hidden sm:flex items-center gap-2 pl-2 shrink-0 mr-4">
                 <Image src="/logo.png" alt="Housify Logo" width={28} height={28} loading="lazy" />
             </div>
 
@@ -171,20 +171,20 @@ const LandlordNavbar = () => {
             <div className="relative shrink-0" ref={dropdownRef}>
                 <button
                     onClick={() => setIsDropdownOpen((p) => !p)}
-                    className="flex flex-col sm:flex-row items-center sm:gap-2 px-3 py-2 rounded-full transition-all hover:bg-primary/10"
+                    className="flex flex-col sm:flex-row items-center sm:gap-2 px-3 py-2 rounded-full transition-all hover:bg-primary/10 ml-3"
                 >
                     {landlord?.avatar ? (
                         <Image
                             src={landlord.avatar}
-                            width={28}
-                            height={28}
+                            width={14}
+                            height={14}
                             alt="Avatar"
                             className="rounded-full"
                         />
                     ) : (
-                        <UserCircle className="text-primary" size={24} />
+                        <UserCircle className="text-primary" size={14} />
                     )}
-                    <span className="hidden sm:inline text-sm font-medium text-neutral-700">
+                    <span className="hidden sm:inline text-xs font-medium text-neutral-700">
                         {landlord?.name?.split(" ")[0] || "Profile"}
                     </span>
                 </button>
