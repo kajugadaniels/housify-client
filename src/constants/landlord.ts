@@ -4,6 +4,9 @@ import {
     Users,
     CreditCard,
     BarChart3,
+    UserCircle,
+    Settings,
+    LogOut,
 } from "lucide-react";
 
 export const LANDLORD_NAV_LINKS = [
@@ -31,5 +34,24 @@ export const LANDLORD_NAV_LINKS = [
         name: "Analytics",
         href: "/landlord/analytics",
         icon: BarChart3,
+    },
+];
+
+export const LANDLORD_PROFILE_DROPDOWN = [
+    {
+        name: "Edit Profile",
+        href: "/landlord/profile/edit",
+        icon: UserCircle,
+    },
+    {
+        name: "Settings",
+        href: "/landlord/settings",
+        icon: Settings,
+    },
+    {
+        name: "Logout",
+        href: "/sign-in",
+        icon: LogOut,
+        isLogout: true,
     },
 ];
