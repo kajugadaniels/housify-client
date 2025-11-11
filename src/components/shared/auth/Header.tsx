@@ -1,18 +1,23 @@
 import Link from "next/link";
-import React from "react";
-import { Skeleton } from "@/components/ui/skeleton";
-import Logo from "../Logo";
+import React, { useState, useEffect } from "react";
+import Logo from "@/components/shared/Logo";
 import AuthButtons from "./AuthButtons";
-import useAuthStore from "@/lib/store/useAuthStore";
+import { Skeleton } from "@/components/ui/skeleton";
 
 /**
  * AuthHeader
  * - Left: Logo (link to home)
- * - Right: Sign in / Sign up buttons (or user menu when authenticated)
- * - Responsive and accessible
+ * - Right: Sign in / Sign up buttons
+ * - Includes skeleton loader simulation (mimics loading states)
  */
 const AuthHeader: React.FC = () => {
-    const { loading } = useAuthStore();
+    const [loading, setLoading] = useState(true);
+
+    // Simulate small loading delay (you can remove this later)
+    useEffect(() => {
+        const timer = setTimeout(() => setLoading(false), 800);
+        return () => clearTimeout(timer);
+    }, []);
 
     return (
         <div className="bg-white/60 backdrop-blur border-b border-slate-200">
@@ -20,15 +25,14 @@ const AuthHeader: React.FC = () => {
                 <div className="flex items-center justify-between h-16">
                     <div className="flex items-center gap-4">
                         <Link href="/" aria-label="Housify home">
-                            <a className="flex items-center gap-3">
+                            <div className="flex items-center gap-3 cursor-pointer">
                                 <Logo className="h-9 w-auto" />
-                            </a>
+                            </div>
                         </Link>
                     </div>
 
                     <div className="flex items-center gap-3">
                         {loading ? (
-                            // show skeleton for loading states (keeps UI stable)
                             <div className="flex items-center gap-2">
                                 <Skeleton className="h-9 w-24 rounded" />
                                 <Skeleton className="h-9 w-24 rounded" />
