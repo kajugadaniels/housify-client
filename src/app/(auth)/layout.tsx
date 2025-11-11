@@ -1,40 +1,24 @@
+// src/app/(auth)/page.tsx
 import React from "react";
 import type { ReactNode } from "react";
 
 export default function AuthLayout({
     children,
-}: Readonly<{
-    children: ReactNode;
-}>) {
+}: Readonly<{ children: ReactNode }>) {
     return (
-        <div className="min-h-screen w-full relative bg-linear-to-b from-[#fdfdfd] via-[#fdfdfd] to-[#f7f7f7]">
-            {/* Top subtle gradient glow */}
-            <div
-                aria-hidden
-                className="absolute inset-x-0 top-0 h-64 pointer-events-none overflow-hidden"
-            >
+        <div className="min-h-screen w-full relative bg-gradient-to-b from-[#f7f8fa] via-[#f9fafb] to-[#eceef1]">
+            {/* Soft top glow and grid lines */}
+            <div aria-hidden className="absolute inset-x-0 top-0 h-64 overflow-hidden">
                 <div className="absolute inset-0 -z-10">
-                    <div
-                        className="w-full h-full bg-[radial-gradient(ellipse_at_top,rgba(0,0,0,0.06)_0%,transparent_45%)] opacity-80"
-                        style={{ mixBlendMode: "multiply" }}
-                    />
-                    {/* faint horizon lines grid */}
+                    <div className="w-full h-full bg-[radial-gradient(ellipse_at_top,rgba(250,235,120,0.25)_0%,transparent_50%)] opacity-90" />
                     <svg
                         className="absolute inset-0 w-full h-full"
                         preserveAspectRatio="none"
                         viewBox="0 0 1440 200"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden
                     >
-                        <defs>
-                            <linearGradient id="g" x1="0" x2="1">
-                                <stop offset="0" stopColor="#d4d4d4" stopOpacity="0.05" />
-                                <stop offset="1" stopColor="#ffffff" stopOpacity="0.0" />
-                            </linearGradient>
-                        </defs>
-                        <rect width="1440" height="200" fill="url(#g)" />
-                        <g stroke="rgba(0,0,0,0.04)" strokeWidth="1">
+                        <g stroke="rgba(0,0,0,0.05)" strokeWidth="1">
                             <path d="M0 20 H1440" />
                             <path d="M0 40 H1440" />
                             <path d="M0 60 H1440" />
@@ -44,13 +28,11 @@ export default function AuthLayout({
                 </div>
             </div>
 
-            {/* Centered content */}
             <main className="min-h-screen flex items-center justify-center px-6 py-14">
                 <div className="w-full max-w-2xl">{children}</div>
             </main>
 
-            {/* Footer */}
-            <footer className="absolute bottom-8 left-0 right-0 text-center text-sm text-gray-500">
+            <footer className="absolute bottom-8 left-0 right-0 text-center text-sm text-neutral-500">
                 <div className="inline-flex gap-6 items-center">
                     <span>Terms</span>
                     <span>Privacy</span>
