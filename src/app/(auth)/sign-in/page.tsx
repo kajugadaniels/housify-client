@@ -5,6 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
+import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
 
@@ -40,17 +41,14 @@ export default function SignIn() {
         <div className="flex flex-col items-center">
             {/* Logo + Title */}
             <div className="flex flex-col items-center">
-                <svg width="56" height="56" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="12" r="11" fill="#ECF15E" />
-                    <path
-                        d="M7 12h10M12 7v10"
-                        stroke="#0b0b0b"
-                        strokeWidth="1.2"
-                        strokeLinecap="round"
-                    />
-                </svg>
-                <h1 className="mt-4 text-3xl sm:text-4xl font-semibold text-neutral-800">
-                    Login to Superlist
+                <Image
+                    src="/logo.png"
+                    width="56"
+                    height="56"
+                    alt="Logo"
+                />
+                <h1 className="mt-4 text-2xl font-semibold text-neutral-800">
+                    Login to Housify
                 </h1>
             </div>
 
@@ -205,7 +203,7 @@ export default function SignIn() {
 
                         {/* Submit */}
                         <Button
-                            className="w-full bg-primary text-neutral-900 hover:brightness-95 text-md"
+                            className="w-full bg-primary text-white hover:brightness-95 text-md"
                             onClick={() => console.log(formData)}
                         >
                             Log In
