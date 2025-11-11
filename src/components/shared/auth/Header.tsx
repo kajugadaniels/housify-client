@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import Logo from "@/components/shared/Logo";
@@ -21,7 +23,7 @@ const AuthHeader: React.FC = () => {
 
     return (
         <div className="bg-white/60 backdrop-blur border-b border-slate-200">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 md:px-8">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                 <div className="flex items-center justify-between h-16">
                     <div className="flex items-center gap-4">
                         <Link href="/" aria-label="Housify home">
