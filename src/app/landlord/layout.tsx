@@ -25,7 +25,7 @@ export default function LandlordLayout({
           scrollbar-thin scrollbar-thumb-neutral-300 scrollbar-thumb-rounded-full
         "
             >
-                <div className="max-w-6xl mx-auto w-full">
+                <div className="min-w-xl mx-auto w-full">
                     {children}
                 </div>
             </main>
